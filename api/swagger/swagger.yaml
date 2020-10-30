@@ -24,23 +24,76 @@ consumes:
 produces:
   - application/json
 paths:
+  /categories:
+    get:
+      tags:
+        - visitor
+      description: Returns the categories lists
+      operationId: categoriesList
+      responses:
+        "200":
+          description: Sucess
+
+  
   /users:
     get:
+      tags:
+        - "users"
       description: Returns the users list
       # used as the method name of the controller
       operationId: usersList
-      
+      responses:
+        "200":
+          description: Sucess
+  /user:
+    post:
+      tags:
+        - visitor
+      description: Create a new user 
+
+      responses:
+        "200":
+          description: Sucess
+
+
+  /topPlayers:
+    get:
+      tags:
+      - visitor
+      description: Returns the top 3 users of all categories
+      responses:
+        "200":
+          description: Sucess
+
+  /topPlayers/{categoryId}:
+    get:
+      tags:
+        - visitor
+      description: Returns the top 3 users of a specified category
+      responses:
+        "200":
+          description: Sucess
+
+  
+  /question/{categoryId}/random:
+    get:
+      tags:
+        - users
+      description: Returns a random question.
       responses:
         "200":
           description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+  
+  /response/{questionId}:
+    get:
+      tags:
+        - users
+      description:
+        Returns the response of a specified question
+      responses:
+        "200":
+          description: Success
+    
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -58,8 +111,3 @@ definitions:
       message:
         type: string
         
-        
-
-          
-        
-       
