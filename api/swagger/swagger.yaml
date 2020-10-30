@@ -1,12 +1,18 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: bdx-quizz
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
 basePath: /
 # 
+tags:
+  - name: users
+    description: Logged in user
+  - name: visitor
+    description: Operations available to non account user
+    
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -18,19 +24,12 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
+  /users:
     get:
-      description: Returns 'Hello' to the caller
+      description: Returns the users list
       # used as the method name of the controller
-      operationId: hello
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
+      operationId: usersList
+      
       responses:
         "200":
           description: Success
@@ -58,3 +57,9 @@ definitions:
     properties:
       message:
         type: string
+        
+        
+
+          
+        
+       
