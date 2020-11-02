@@ -83,6 +83,15 @@ paths:
       responses:
         "200":
           description: Success
+          
+  /question/{categoryId}/{difficultyId}/random:
+    get:
+      tags:
+        - users
+      description: Return a random question with the selected difficulty and category.
+      responses:
+        "200":
+          description: Success
   
   /response/{questionId}:
     get:
@@ -93,6 +102,27 @@ paths:
       responses:
         "200":
           description: Success
+  
+  /user/{playerId}:
+    get:
+      tags:
+        - users
+      description: Return the profile of a specified player
+      responses:
+        "200":
+          description: Success
+          
+  /user/{playerId}/invite:
+    post:
+      tags:
+        - users
+      description: Send friend request to a user
+      responses:
+        "200":
+          description: Success
+      
+        
+  
     
   /swagger:
     x-swagger-pipe: swagger_raw
