@@ -1,32 +1,26 @@
-swagger: "2.0"
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/smelezan/Quizzup/1.0.0
 info:
-  version: "0.0.1"
-  title: bdx-quizz
-# during dev, should point to your local machine
-host: localhost:10010
-# basePath prefixes all resource paths 
-basePath: /
-# 
+  description: This is a simple Quizz API
+  version: "1.0.0"
+  title: Simple Quizz API
+  contact:
+    email: bdx-quizz@bordeaux.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
   - name: users
     description: Logged in user
   - name: visitor
     description: Operations available to non account user
-    
-schemes:
-  # tip: remove http to make production-grade
-  - http
-  - https
-# format of bodies a client can send (Content-Type)
-consumes:
-  - application/json
-# format of the responses to the client (Accepts)
-produces:
-  - application/json
-
-
-  
 paths:
+
+
+
   /categories:
     get:
       tags:
@@ -34,16 +28,22 @@ paths:
       description: Returns the categories lists
       operationId: categoriesList
       responses:
-        "200":
-          description: Sucess
-
-  
+        '200':
+          description: Logo image in PNG format
+          content:
+            image/png:
+              schema:
+                type: array
+                # items: 
+                  # $ref: '#/components/schemas/InventoryItem'
+                format: binary
   /users?q=:
     get:
       parameters:
         - in: query
-          name: q
-          type: string
+          name: query
+          schema:
+            type: string
           description: The partial searched username
       tags:
         - "users"
@@ -67,6 +67,38 @@ paths:
     
       deprecated: false
 
+  /removeFriend/{userId}:
+    post:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success
+      operationId: removeFriend
+      description: remove a friend from the friend list.
+  
+  /user/{userId}/invite:
+    post:
+      tags:
+        - users
+      description: Send friend request to a user
+      responses:
+        "200":
+          description: Success
+      
+  /friendList/{userId}:
+    get:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success
+      operationId: list friends of an user
+      description: list all the friends of user {userId}.
+        
+    
+      deprecated: false
+
 
   /user:
     post:
@@ -77,33 +109,42 @@ paths:
       responses:
         "200":
           description: Sucess
+
   /user/{userId}:
     get:
       tags:
-        - users
+        - user
       responses:
         "200":
           description: Success
       operationId: getUser
       description: find a user by Id
+    post:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success
+      operationId: modify user
+      description: modify the data of your account
 
   /topPlayers:
     get:
       tags:
       - visitor
-      description: Returns the top 3 users of all categories
+      description: Returns the top 10 of all categories
       responses:
         "200":
           description: Sucess
-
-  /topPlayers/{categoryId}:
+          
+  /stats/{questionId}:
     get:
       tags:
         - visitor
-      description: Returns the top 3 users of a specified category
+      description: Return the ratio of good and bad answer of a specified question
       responses:
         "200":
-          description: Sucess
+          description: Succes
 
   
   /question/{categoryId}/random:
@@ -112,9 +153,22 @@ paths:
         - users
       description: Returns a random question.
       responses:
+        '200':
+          description: Logo image in PNG format
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+
+  /question/{categoryId}/all:
+    get:
+      tags:
+        - users
+      description: Return all the questions from a category.
+      responses:
         "200":
-          description: A question object
-          
+          description: Sucess
           
   /question/{categoryId}/{difficultyId}/random:
     get:
@@ -134,13 +188,25 @@ paths:
       responses:
         "200":
           description: Success
+
+  /anecdote/{questionId}:
+    get:
+      tags: 
+        - users
+      description: Return an anecdote with additional information to the question asked
+      responses:
+        "200":
+          description: Success
+
   /question/{categoryId}/{questionId}?diff=:
     get:
       parameters:
         - in: query
           name: diff
-          type: number
+          
           description: Specify the difficulty of the question.
+          schema:
+            type: number
 
       tags:
         - users
@@ -150,31 +216,71 @@ paths:
       description: find question of a specific categorie by Id 
 
       deprecated: false
-
           
-  
-  /user/{playerId}:
-    get:
-      tags:
-        - users
-      description: Return the profile of a specified player
-      responses:
-        "200":
-          description: Success
-          
-  /user/{playerId}/invite:
-    post:
-      tags:
-        - users
-      description: Send friend request to a user
-      responses:
-        "200":
-          description: Success
       
-        
+  
+
+components:
+  schemas:
+
+    Category:
+      type: object
+      required:
+        - id
+        - name
+        - timePlayed
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Animaux
+        timePlayed:
+          type: integer
+          example: 1000
+          
+          
+    Difficulty:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Débutant
 
 
-    
-  /swagger:
-    x-swagger-pipe: swagger_raw
+    Player:
+      type: object
+      required:
+        - id
+        - pseudo
+        - money
+        - level
+        - friends
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        password:
+          type: string
+          example: -012345-
+        money:
+          type: integer
+          example: 10
+        level:
+          type: integer
+          example: 1
+        friends:
+          type: array
+          items: 
+            type: string
+            format: uuid
+            example: d290f1ee-6c54-4b01-90e6-d701748f0480
 
