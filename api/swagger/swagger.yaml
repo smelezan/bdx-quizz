@@ -23,6 +23,9 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+
+
+  
 paths:
   /categories:
     get:
@@ -35,8 +38,13 @@ paths:
           description: Sucess
 
   
-  /users:
+  /users?q=:
     get:
+      parameters:
+        - in: query
+          name: q
+          type: string
+          description: The partial searched username
       tags:
         - "users"
       description: Returns the users list
@@ -45,6 +53,21 @@ paths:
       responses:
         "200":
           description: Sucess
+
+  /addFriend/{userId}:
+    post:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success
+      operationId: addFriend
+      description: find a user by Id and send a friend request to him.
+        
+    
+      deprecated: false
+
+
   /user:
     post:
       tags:
@@ -54,7 +77,15 @@ paths:
       responses:
         "200":
           description: Sucess
-
+  /user/{userId}:
+    get:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success
+      operationId: getUser
+      description: find a user by Id
 
   /topPlayers:
     get:
@@ -93,21 +124,24 @@ paths:
       responses:
         "200":
           description: Success
-    
+  /question/{categoryId}/{questionId}?diff=:
+    get:
+      parameters:
+        - in: query
+          name: diff
+          type: number
+          description: Specify the difficulty of the question.
+
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success
+      description: find question of a specific categorie by Id 
+
+      deprecated: false
+
+          
   /swagger:
     x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
-definitions:
-  HelloWorldResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
-  ErrorResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
-        
+
