@@ -113,7 +113,8 @@ paths:
       description: Returns a random question.
       responses:
         "200":
-          description: Success
+          description: A question object
+          
           
   /question/{categoryId}/{difficultyId}/random:
     get:
@@ -133,7 +134,6 @@ paths:
       responses:
         "200":
           description: Success
-<<<<<<< HEAD
   /question/{categoryId}/{questionId}?diff=:
     get:
       parameters:
@@ -152,7 +152,6 @@ paths:
       deprecated: false
 
           
-=======
   
   /user/{playerId}:
     get:
@@ -173,9 +172,9 @@ paths:
           description: Success
       
         
-  
+
+
     
->>>>>>> 9cdda66130d2b10c1f3fa4d46019a4527700a258
   /swagger:
     x-swagger-pipe: swagger_raw
 
