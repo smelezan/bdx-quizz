@@ -44,11 +44,16 @@ paths:
       operationId: usersList
       responses:
         "200":
-          description: an array of users
+          description: An array of users
           schema:
             type: array
             items:
               $ref:  "#/definitions/User"
+        default:
+          description: Error - Users not found
+          schema:
+            $ref: "#/definitions/ErrorModel"
+
             
 
   /addFriend/{userId}:
@@ -70,29 +75,49 @@ paths:
         "200":
           description: The invitation has been successfully send.
         "400":
-          description: Error- This user doesn't exist.
+          description: Error - This user doesn't exist.
       operationId: addFriend
-      description: find a user by Id and send a friend request to him.
+      description: Find a user by Id and send a friend request to him.
           
 
   /removeFriend/{userId}:
     post:
+      parameters:
+        - in: path
+          name: userId
+          required: True
+          type: string
+          description: The Id of a user
+        - in: body
+          name: user
+          schema:
+            $ref:  "#/definitions/User"
       tags:
         - users
       responses:
         "200":
-          description: Success
+          description: Success - The user has been successfully removed from your friends list.
+        "400":
+          description: Error - The user is not in your friends list.
       operationId: removeFriend
-      description: remove a friend from the friend list.
+      description: Remove a friend from the friends list.
   
-  /user/{userId}/invite:
+  /user/invite/{email}:
     post:
+      parameters:
+        - in: path
+          name: email
+          required: True
+          type: string
+          description: The mail of the friend
       tags:
         - users
-      description: Send friend request to a user
+      description: Send email to invite a friend to play.
       responses:
         "200":
-          description: Success
+          description: Success - Invitation sent.
+        "400":
+          description: Error - Email address not found.
       
   /friendList/{userId}:
     get:
