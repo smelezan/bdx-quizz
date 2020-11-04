@@ -1,26 +1,16 @@
-openapi: 3.0.0
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/smelezan/Quizzup/1.0.0
+swagger: "2.0"
+
 info:
-  description: This is a simple Quizz API
-  version: "1.0.0"
-  title: Simple Quizz API
-  contact:
-    email: bdx-quizz@bordeaux.com
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-tags:
-  - name: users
-    description: Logged in user
-  - name: visitor
-    description: Operations available to non account user
+  title: bdx-quizz
+  description: API description in Markdown.
+  version: 1.0.0
+host: api.example.com
+basePath: /v1
+schemes:
+  - https
+
 paths:
-
-
-
+  
   /categories:
     get:
       tags:
@@ -29,43 +19,61 @@ paths:
       operationId: categoriesList
       responses:
         '200':
-          description: Logo image in PNG format
-          content:
-            image/png:
-              schema:
-                type: array
-                # items: 
-                  # $ref: '#/components/schemas/InventoryItem'
-                format: binary
+          description: categories response
+          schema:
+            type: array
+            items: 
+              $ref:  "#/definitions/Category"
+        default:
+          description: Error categories
+          schema:
+            $ref:  "#/definitions/ErrorModel"
+
+
   /users?q=:
     get:
       parameters:
         - in: query
-          name: query
-          schema:
-            type: string
-          description: The partial searched username
+          name: q
+          type: string
+          description: The name of the user
+        
       tags:
         - "users"
       description: Returns the users list
-      # used as the method name of the controller
       operationId: usersList
       responses:
         "200":
-          description: Sucess
+          description: an array of users
+          schema:
+            type: array
+            items:
+              $ref:  "#/definitions/User"
+            
 
   /addFriend/{userId}:
     post:
+      parameters:
+        - in: path
+          name: userId
+          required: True
+          type: string
+          description: The Id of a user
+        - in: body
+          name: user
+          schema:
+            $ref:  "#/definitions/User"
+          
       tags:
         - users
-      responses:
+      responses: 
         "200":
-          description: Success
+          description: The invitation has been successfully send.
+        "400":
+          description: Error- This user doesn't exist.
       operationId: addFriend
       description: find a user by Id and send a friend request to him.
-        
-    
-      deprecated: false
+          
 
   /removeFriend/{userId}:
     post:
@@ -105,10 +113,17 @@ paths:
       tags:
         - visitor
       description: Create a new user 
+      parameters:
+        - in: body
+          name: user
+          schema:
+            $ref: "#/definitions/User"
 
       responses:
         "200":
-          description: Sucess
+          description: The user has been created successfully.
+        "400":
+          description: This user already exists.
 
   /user/{userId}:
     get:
@@ -136,6 +151,15 @@ paths:
       responses:
         "200":
           description: Sucess
+          schema:
+            type: array
+            items: 
+              $ref:  "#/definitions/User"
+        default:
+          description: Error Users
+          schema:
+            $ref:  "#/definitions/ErrorModel"
+          
           
   /stats/{questionId}:
     get:
@@ -145,6 +169,14 @@ paths:
       responses:
         "200":
           description: Succes
+          schema: 
+            type: object
+            $ref: "#/definitions/QuestionStat"
+        default:
+          description: this question doesn't exists.
+          schema:
+            $ref:  "#/definitions/ErrorModel"
+
 
   
   /question/{categoryId}/random:
@@ -155,11 +187,9 @@ paths:
       responses:
         '200':
           description: Logo image in PNG format
-          content:
-            image/png:
-              schema:
-                type: string
-                format: binary
+          schema:
+            type: string
+            format: binary
 
   /question/{categoryId}/all:
     get:
@@ -203,11 +233,19 @@ paths:
       parameters:
         - in: query
           name: diff
-          
+          type: integer
           description: Specify the difficulty of the question.
-          schema:
-            type: number
-
+        - in: path
+          name: categoryId
+          type: integer
+          description: todo
+          required: True
+        - in: path
+          name: questionId
+          type: integer
+          description: todo
+          required: True
+        
       tags:
         - users
       responses:
@@ -220,67 +258,85 @@ paths:
       
   
 
-components:
-  schemas:
+definitions:
+  Category:
+    type: object
+    required:
+      - id
+      - name
+      - timePlayed
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: Animaux
+      timePlayed:
+        type: integer
+        example: 1000
+  
+  ErrorModel:
+    type: object
+    required:
+    - message
+    - code
+    properties:
+      message:
+        type: string
+      code:
+        type: integer
+        minimum: 100
+        maximum: 600
+        
+  Difficulty:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: Débutant
 
-    Category:
-      type: object
-      required:
-        - id
-        - name
-        - timePlayed
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Animaux
-        timePlayed:
-          type: integer
-          example: 1000
-          
-          
-    Difficulty:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Débutant
+
+  User:
+    type: object
+    required:
+      - id
+      - pseudo
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0480
+      pseudo:
+        type: string
+        example: Yondamdam
+
+  QuestionStat:
+    type: object
+    required:
+      - questionID
+      - nbGoodAnswers
+      - nbBadAnswers
+      - totalAnswers
+    properties:
+      questionID:
+        type: integer
+        example: 10
+      nbGoodAnswers:
+        type: number
+        example: 56
+      nbBadAnswers:
+        type: number
+        example: 40
+      totalAnswers:
+        type: number
+        example: 96
 
 
-    Player:
-      type: object
-      required:
-        - id
-        - pseudo
-        - money
-        - level
-        - friends
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        password:
-          type: string
-          example: -012345-
-        money:
-          type: integer
-          example: 10
-        level:
-          type: integer
-          example: 1
-        friends:
-          type: array
-          items: 
-            type: string
-            format: uuid
-            example: d290f1ee-6c54-4b01-90e6-d701748f0480
 
