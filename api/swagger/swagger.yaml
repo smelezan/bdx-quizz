@@ -112,12 +112,29 @@ paths:
           description: The mail of the friend
       tags:
         - users
-      description: Send email to invite a friend to play.
+      description: Send a mail to invite a person not registered to play one game.
       responses:
         "200":
           description: Success - Invitation sent.
         "400":
           description: Error - Email address not found.
+          
+  /user/invite/{username}:
+    post:
+      parameters:
+        - in: path
+          name: username
+          required: True
+          type: string
+          description: The username of the friend
+      tags:
+        - users
+      description: Send notification to invite a friend to play.
+      responses:
+        "200":
+          description: Success - Invitation sent.
+        "400":
+          description: Error - username not found.
       
   /friendList/{userId}:
     get:
@@ -220,10 +237,16 @@ paths:
             $ref:  "#/definitions/ErrorModel"
           
           
-  /stats/{questionId}:
+  /stats/?questionId=:
     get:
       tags:
         - visitor
+      parameters:
+        - in: query
+          name: questionId
+          required: True
+          type: integer
+          description: The Id of a question
       description: Return the ratio of good and bad answer of a specified question
       responses:
         "200":
@@ -236,7 +259,51 @@ paths:
           schema:
             $ref:  "#/definitions/ErrorModel"
 
+  /stats/?categoryId=:
+    get:
+      tags:
+        - visitor
+      parameters:
+        - in: query
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+      responses:
+        "200":
+          description: Success - Send the stats of a specific category
+          schema:
+            $ref: "#/definitions/CategoryStat"
+        "400":
+          description: Error - That category does not exist
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      operationId: statsCat
+      description: Send the stats of a specific category
 
+  /stats/?difficulty=:
+    get:
+      tags:
+        - visitor
+      parameters:
+        - in: query 
+          name: difficulty
+          required: True
+          type: integer
+          maximum: 3
+          minimum: 1
+          description: The difficulty
+      responses:
+        "200":
+          description: Success - Send the stats of a specific difficulty
+          schema:
+            $ref: "#/definitions/DifficultyStat"
+        "400":
+          description: Error - That difficulty does not exist
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      operationId: statsDiff
+      description: Send the stats of a specific difficulty
   
   /question/{categoryId}/random:
     get:
@@ -285,6 +352,15 @@ paths:
         "200":
           description: Success
   
+  /question/{categoryId}/{difficultyId}/all:
+    get:
+      tags:
+        - users
+      description: Return all question with the selected difficulty and category.
+      responses:
+        "200":
+          description: Success
+  
   /response/{questionId}:
     get:
       tags:
@@ -328,7 +404,47 @@ paths:
         "200":
           description: Success
       description: find question of a specific categorie by Id 
-        
+
+  /quizz/random:
+    get:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success - Send a random quizz
+          schema:
+            $ref: "#/definitions/Quizz"
+        "400":
+          description: Error - No quizz found
+          schema: 
+            $ref: "#/definitions/ErrorModel"
+      operationId: randomQuizz
+      description: Send a random quizz
+
+  /quizz/all:
+    get:
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success - Send all quizz of a specific category
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Quizz"
+        "400":
+          description: Error - That category does not exist
+          schema: 
+            $ref: "#/definitions/ErrorModel"
+      operationId: allQuizz
+      description: Send all quizz
+
   /quizz/{categoryId}/random:
     get:
       parameters:
@@ -348,7 +464,7 @@ paths:
           description: Error - That category does not exist
           schema: 
             $ref: "#/definitions/ErrorModel"
-      operationId: randomQuizz
+      operationId: randomQuizzCat
       description: Send a random quizz of a specific category
 
   /quizz/{categoryId}/all:
@@ -372,44 +488,167 @@ paths:
           description: Error - That category does not exist
           schema: 
             $ref: "#/definitions/ErrorModel"
+      operationId: allQuizzCat
+      description: Send all quizz of a specific category
 
-  /quizz/random:
+  /quizz/random?diff=:
     get:
       tags:
         - users
+      parameters:
+        - in: query
+          name: diff
+          type: integer
+          maximum: 3
+          minimum: 1
+          description: The difficulty of the quizz
       responses:
         "200":
-          description: Success - Send a random quizz
+          description: Success - Send a random quizz of a specific difficulty
           schema:
-            $ref: "#/definitions/Quizz"
+            $ref:  "#/definitions/Quizz"
         "400":
-          description: Error - No quizz found
-          schema: 
+          description: Error - Bad difficulty argument
+          schema:
             $ref: "#/definitions/ErrorModel"
+      operationId: randomQuizzDiff
+      description: Send a random quizz of a specific difficulty
 
-  /quizz/all:
+  /quizz/all?diff=:
     get:
+      tags:
+        - users
       parameters:
+        - in: query
+          name: diff
+          type: integer
+          maximum: 3
+          minimum: 1
+          description: The difficulty of the quizz
+      responses:
+        "200":
+          description: Success - Send all quizz of a specific difficulty
+          schema:
+            type: array
+            items: 
+              $ref:  "#/definitions/Quizz"
+        "400":
+          description: Error - Bad difficulty argument
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      operationId: allQuizzDiff
+      description: Send all quizz of a specific difficulty
+
+  /quizz/{categoryId}/random?diff=:
+    get:
+      tags:
+        - users
+      parameters:
+        - in: query
+          name: diff
+          type: integer
+          maximum: 3
+          minimum: 1
+          description: The difficulty of the quizz
         - in: path
           name: categoryId
           required: True
           type: integer
           description: The Id of a category
-      tags:
-        - users
       responses:
         "200":
-          description: Success - Send all quizz of a specific category
+          description: Success - Send a random quizz of a specific category and difficulty
+          schema:
+            $ref:  "#/definitions/Quizz"
+        "400":
+          description: Error - Bad difficulty argument
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      operationId: randomQuizzCatDiff
+      description: Send a random quizz of a specific difficulty
+
+  /quizz/{categoryId}/all?diff=:
+    get:
+      tags:
+        - users
+      parameters:
+        - in: query
+          name: diff
+          type: integer
+          maximum: 3
+          minimum: 1
+          description: The difficulty of the quizz
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+      responses:
+        "200":
+          description: Success - Send all quizz of a specific category and ifficulty
           schema:
             type: array
             items: 
-              $ref: "#/definitions/Quizz"
+              $ref:  "#/definitions/Quizz"
         "400":
-          description: Error - That category does not exist
-          schema: 
+          description: Error - Bad difficulty argument
+          schema:
             $ref: "#/definitions/ErrorModel"
+      operationId: allQuizzCatDiff
+      description: Send all quizz of a specific difficulty
+        
+  /notifications:
+    get:
+      tags:
+        - users
+      
+      parameters:
+        - in: body
+          name: userId
+          required: true
+          schema:
+            type: string
+            example: d290f1ee-6c54-4b01-90e6-d701748f0480        
+      responses:
+        "200":
+          description: Success - Send a list of notifications
+          schema:
+            type: array
+            items: 
+              $ref:  "#/definitions/Notification"
+        "400":
+          description: Error - This User doesn't exists
+          schema:
+            $ref:  "#/definitions/ErrorModel"
+               
             
-
+  /defy/{userId}/{questionId}:
+    post:
+      tags:
+        - users
+      description: Send a defy request to a user.
+      parameters:
+        - in: body
+          name: userId
+          required: true
+          schema: 
+            type: string
+            example: d290f1ee-6c54-4b01-90e6-d701748f0480 
+        - in: body
+          name : questionId
+          schema:
+            type: string
+            example: musique
+      responses:
+        "200":
+          description: Success - Sent a defy request.
+          schema:
+            type: string
+            example: defy request sent
+        "400":
+          description: Error - User or category not found.
+          schema:
+            $ref : "#/definitions/ErrorModel"
 definitions:
   Category:
     type: object
@@ -440,6 +679,7 @@ definitions:
         type: integer
         minimum: 100
         maximum: 600
+        example: 400
 
   User:
     type: object
@@ -499,7 +739,6 @@ definitions:
       - id
       - difficulty
       - questions
-      - answers
     properties:
       id:
         type: integer
@@ -513,10 +752,6 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Question"
-      answers:
-        type: array
-        items: 
-          $ref: "#/definitions/Answer"
 
   QuestionStat:
     type: object
@@ -538,6 +773,84 @@ definitions:
       totalAnswers:
         type: number
         example: 96
+  
+  QuizzStat:
+    type: object
+    required:
+      - quizzID
+      - nbGoodAnswers
+      - nbBadAnswers
+      - totalAnswers
+    properties:
+      questionID:
+        type: integer
+        example: 10
+      nbGoodAnswers:
+        type: number
+        example: 56
+      nbBadAnswers:
+        type: number
+        example: 40
+      totalAnswers:
+        type: number
+        example: 96
+  
+  DifficultyStat:
+    type: object
+    required:
+      - difficultyID
+      - nbGoodAnswers
+      - nbBadAnswers
+      - totalAnswers
+    properties:
+      questionID:
+        type: integer
+        example: 10
+      nbGoodAnswers:
+        type: number
+        example: 56
+      nbBadAnswers:
+        type: number
+        example: 40
+      totalAnswers:
+        type: number
+        example: 96
+  
 
+  gameRequest:
+    type: object
+    required:
+      - id
+      - userId
+      - quizz
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0480
+      userId:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0480
+      quizz:
+        $ref:  "#/definitions/Quizz"
 
+        
+  Notification:
+    type: object
+    required:
+      - friendRequests
+      - gameRequests
+    properties:
+      friendRequests:
+        type: array
+        items: 
+          $ref:  "#/definitions/User"
+      gameRequests:
+        type: array
+        items:
+          $ref:  "#/definitions/gameRequest"
+            
+          
+    
 
