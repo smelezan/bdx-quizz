@@ -329,7 +329,86 @@ paths:
           description: Success
       description: find question of a specific categorie by Id 
         
-  
+  /quizz/{categoryId}/random:
+    get:
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success - Send a quizz of a specific category
+          schema:
+            $ref: "#/definitions/Quizz"
+        "400":
+          description: Error - That category does not exist
+          schema: 
+            $ref: "#/definitions/ErrorModel"
+      operationId: randomQuizz
+      description: Send a random quizz of a specific category
+
+  /quizz/{categoryId}/all:
+    get:
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success - Send all quizz of a specific category
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Quizz"
+        "400":
+          description: Error - That category does not exist
+          schema: 
+            $ref: "#/definitions/ErrorModel"
+
+  /quizz/random:
+    get:
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success - Send a random quizz
+          schema:
+            $ref: "#/definitions/Quizz"
+        "400":
+          description: Error - No quizz found
+          schema: 
+            $ref: "#/definitions/ErrorModel"
+
+  /quizz/all:
+    get:
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+      tags:
+        - users
+      responses:
+        "200":
+          description: Success - Send all quizz of a specific category
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Quizz"
+        "400":
+          description: Error - That category does not exist
+          schema: 
+            $ref: "#/definitions/ErrorModel"
+            
 
 definitions:
   Category:
@@ -376,7 +455,6 @@ definitions:
         type: string
         example: Yondamdam
 
-
   Question:
     type: object
     required:
@@ -401,7 +479,6 @@ definitions:
         items: 
           type: string
         example: ["Yes", "No"]
-
 
   Answer:
     type: object
@@ -440,7 +517,6 @@ definitions:
         type: array
         items: 
           $ref: "#/definitions/Answer"
-
 
   QuestionStat:
     type: object
