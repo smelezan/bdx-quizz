@@ -123,14 +123,25 @@ paths:
     get:
       tags:
         - users
+      parameters:
+        - in: path
+          name: userId
+          required: True
+          type: string
+          description: The Id of an user
       responses:
         "200":
-          description: Success
-      operationId: list friends of an user
-      description: list all the friends of user {userId}.
-        
-    
-      deprecated: false
+          description: Success - Send the list of friends of the user
+          schema:
+            type: array
+            items:
+              $ref:  "#/definitions/User"
+        "400":
+          description: Error - This user does not exist
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      operationId: listFriends
+      description: list all the friends of an user.
 
 
   /user:
@@ -153,19 +164,42 @@ paths:
   /user/{userId}:
     get:
       tags:
-        - user
+        - users
+      parameters:
+        - in: path
+          name: userId
+          required: True
+          type: string
+          description: The Id of an user
       responses:
         "200":
-          description: Success
+          description: Success - Send an user
+          schema: 
+            $ref: "#/definitions/User"
+        "400":
+          description: Error - User not found
+          schema:
+            $ref: "#/definitions/User"
       operationId: getUser
       description: find a user by Id
     post:
       tags:
         - users
+      parameters:
+        - in: body
+          name: user
+          schema:
+            $ref:  "#/definitions/User"
       responses:
         "200":
-          description: Success
-      operationId: modify user
+          description: Success - The user info has been updated
+          schema: 
+            $ref: "#/definitions/User"
+        "400":
+          description: Error - User not found
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      operationId: editUser
       description: modify the data of your account
 
   /topPlayers:
@@ -208,13 +242,19 @@ paths:
     get:
       tags:
         - users
-      description: Returns a random question.
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
       responses:
         '200':
-          description: Logo image in PNG format
+          description: Success - Send a random question of a category
           schema:
             type: string
             format: binary
+      description: Returns a random question.
 
   /question/{categoryId}/all:
     get:
