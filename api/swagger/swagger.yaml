@@ -250,20 +250,31 @@ paths:
           description: The Id of a category
       responses:
         '200':
-          description: Success - Send a random question of a category
+          description: Success - Send a random question of a specific category
           schema:
-            type: string
-            format: binary
-      description: Returns a random question.
+            $ref: "#/definitions/Question"
+      operationId: randomQuestion
+      description: Returns a random question
 
   /question/{categoryId}/all:
     get:
       tags:
         - users
-      description: Return all the questions from a category.
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
       responses:
-        "200":
-          description: Sucess
+        '200':
+          description: Success - Send all questions of a specific category
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Question"
+      operationId: allQuestion
+      description: Returns all question of a category
           
   /question/{categoryId}/{difficultyId}/random:
     get:
@@ -317,10 +328,7 @@ paths:
         "200":
           description: Success
       description: find question of a specific categorie by Id 
-
-      deprecated: false
-          
-      
+        
   
 
 definitions:
@@ -353,20 +361,6 @@ definitions:
         type: integer
         minimum: 100
         maximum: 600
-        
-  Difficulty:
-    type: object
-    required:
-      - id
-      - name
-    properties:
-      id:
-        type: integer
-        example: 1
-      name:
-        type: string
-        example: Débutant
-
 
   User:
     type: object
@@ -381,6 +375,72 @@ definitions:
       pseudo:
         type: string
         example: Yondamdam
+
+
+  Question:
+    type: object
+    required:
+      - id
+      - difficulty
+      - question
+      - possibilities
+    properties:
+      id:
+        type:  integer
+        example: 10
+      difficulty:
+        type: integer
+        maximum: 3
+        minimum: 1
+        example: 1
+      question:
+        type: string
+        example: "Is this a question ?"
+      possibilities:
+        type: array
+        items: 
+          type: string
+        example: ["Yes", "No"]
+
+
+  Answer:
+    type: object
+    required:
+      - questionId
+      - answer
+    properties:
+      questionID:
+        type: integer
+        example: 10
+      answer:
+        type: string
+        example: "Yes"
+
+  Quizz:
+    type: object
+    required:
+      - id
+      - difficulty
+      - questions
+      - answers
+    properties:
+      id:
+        type: integer
+        example: 10
+      difficulty:
+        type: integer
+        maximum: 3
+        minimum: 1
+        example: 1
+      questions: 
+        type: array
+        items:
+          $ref: "#/definitions/Question"
+      answers:
+        type: array
+        items: 
+          $ref: "#/definitions/Answer"
+
 
   QuestionStat:
     type: object
