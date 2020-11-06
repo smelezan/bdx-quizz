@@ -102,10 +102,10 @@ paths:
       operationId: removeFriend
       description: Remove a friend from the friends list.
   
-  /user/invite/{email}:
+  /user/invite/?email=:
     post:
       parameters:
-        - in: path
+        - in: query
           name: email
           required: True
           type: string
@@ -119,10 +119,10 @@ paths:
         "400":
           description: Error - Email address not found.
           
-  /user/invite/{username}:
+  /user/invite/?=username:
     post:
       parameters:
-        - in: path
+        - in: query
           name: username
           required: True
           type: string
@@ -207,6 +207,11 @@ paths:
           name: user
           schema:
             $ref:  "#/definitions/User"
+        - in: path
+          name: userId
+          required: True
+          type: string
+          description: The Id of an user
       responses:
         "200":
           description: Success - The user info has been updated
@@ -252,7 +257,6 @@ paths:
         "200":
           description: Succes
           schema: 
-            type: object
             $ref: "#/definitions/QuestionStat"
         default:
           description: this question doesn't exists.
@@ -347,19 +351,48 @@ paths:
     get:
       tags:
         - users
+      parameters:
+        - in: path
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+        - in: path
+          name: difficultyId
+          required: True
+          type: integer
+          description: The difficulty
       description: Return a random question with the selected difficulty and category.
       responses:
         "200":
           description: Success
+          schema:
+            $ref: "#/definitions/Question"
+          
   
   /question/{categoryId}/{difficultyId}/all:
     get:
       tags:
         - users
       description: Return all question with the selected difficulty and category.
+      parameters:
+       - in: path
+         name: categoryId
+         required: True
+         type: integer
+         description: The Id of a category
+       - in: path
+         name: difficultyId
+         required: True
+         type: integer
+         description: The difficulty
       responses:
         "200":
           description: Success
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Question"
   
   /response/{questionId}:
     get:
@@ -367,18 +400,33 @@ paths:
         - users
       description:
         Returns the response of a specified question
+      parameters:
+      - in: path
+        name: questionId
+        required: True
+        type: integer
+        description: The Id of a question
       responses:
         "200":
           description: Success
+          schema: 
+            $ref: "#/definitions/Answer"
 
   /anecdote/{questionId}:
     get:
       tags: 
         - users
       description: Return an anecdote with additional information to the question asked
+      parameters:
+      - in: path
+        name: questionId
+        required: True
+        type: integer
+        description: The Id of a question
       responses:
         "200":
           description: Success
+      
 
   /question/{categoryId}/{questionId}?diff=:
     get:
@@ -423,12 +471,6 @@ paths:
 
   /quizz/all:
     get:
-      parameters:
-        - in: path
-          name: categoryId
-          required: True
-          type: integer
-          description: The Id of a category
       tags:
         - users
       responses:
@@ -628,17 +670,15 @@ paths:
         - users
       description: Send a defy request to a user.
       parameters:
-        - in: body
+        - in: path
           name: userId
           required: true
-          schema: 
-            type: string
-            example: d290f1ee-6c54-4b01-90e6-d701748f0480 
-        - in: body
+          type: string
+          
+        - in: path
           name : questionId
-          schema:
-            type: string
-            example: musique
+          required: True
+          type: integer
       responses:
         "200":
           description: Success - Sent a defy request.
@@ -726,12 +766,13 @@ definitions:
       - questionId
       - answer
     properties:
-      questionID:
+      questionId:
         type: integer
         example: 10
       answer:
         type: string
         example: "Yes"
+        
 
   Quizz:
     type: object
@@ -782,7 +823,7 @@ definitions:
       - nbBadAnswers
       - totalAnswers
     properties:
-      questionID:
+      quizzID:
         type: integer
         example: 10
       nbGoodAnswers:
@@ -795,6 +836,27 @@ definitions:
         type: number
         example: 96
   
+  CategoryStat:
+    type: object
+    required:
+      - categoryID
+      - nbGoodAnswers
+      - nbBadAnswers
+      - totalAnswers
+    properties:
+      categoryID:
+        type: integer
+        example: 10
+      nbGoodAnswers:
+        type: number
+        example: 56
+      nbBadAnswers:
+        type: number
+        example: 40
+      totalAnswers:
+        type: number
+        example: 96
+        
   DifficultyStat:
     type: object
     required:
@@ -803,7 +865,7 @@ definitions:
       - nbBadAnswers
       - totalAnswers
     properties:
-      questionID:
+      difficultyID:
         type: integer
         example: 10
       nbGoodAnswers:
