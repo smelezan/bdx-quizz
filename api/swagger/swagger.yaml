@@ -9,12 +9,31 @@ basePath: /v1
 schemes:
   - https
 
+tags:
+  - name: stats
+    description: stats
+  - name: auth
+    description: auth
+  - name: topPlayers
+    description: topPlayers
+  - name: friend
+    description: friend
+  - name: quizz
+    description: quizz
+  - name: question
+    description: question
+  - name: categorie
+    description: categorie
+  - name: user
+    description: user
+
+
 paths:
   
   /categories:
     get:
       tags:
-        - visitor
+        - categorie
       description: Returns the categories lists
       operationId: categoriesList
       responses:
@@ -32,14 +51,15 @@ paths:
 
   /users?q=:
     get:
+      tags:
+        - user
+      security:
+          - basicAuth: []
       parameters:
         - in: query
           name: q
           type: string
           description: The name of the user
-        
-      tags:
-        - "users"
       description: Returns the users list
       operationId: usersList
       responses:
@@ -58,6 +78,8 @@ paths:
 
   /addFriend/{userId}:
     post:
+      tags:
+        - friend
       parameters:
         - in: path
           name: userId
@@ -69,8 +91,8 @@ paths:
           schema:
             $ref:  "#/definitions/User"
           
-      tags:
-        - users
+      security:
+          - basicAuth: []
       responses: 
         "200":
           description: The invitation has been successfully send.
@@ -82,6 +104,8 @@ paths:
 
   /removeFriend/{userId}:
     post:
+      tags:
+        - friend
       parameters:
         - in: path
           name: userId
@@ -92,8 +116,8 @@ paths:
           name: user
           schema:
             $ref:  "#/definitions/User"
-      tags:
-        - users
+      security:
+          - basicAuth: []
       responses:
         "200":
           description: Success - The user has been successfully removed from your friends list.
@@ -104,14 +128,16 @@ paths:
   
   /user/invite/?email=:
     post:
+      tags:
+      - user
       parameters:
         - in: query
           name: email
           required: True
           type: string
           description: The mail of the friend
-      tags:
-        - users
+      security:
+          - basicAuth: []
       description: Send a mail to invite a person not registered to play one game.
       responses:
         "200":
@@ -121,14 +147,16 @@ paths:
           
   /user/invite/?=username:
     post:
+      tags:
+      - user
       parameters:
         - in: query
           name: username
           required: True
           type: string
           description: The username of the friend
-      tags:
-        - users
+      security:
+          - basicAuth: []
       description: Send notification to invite a friend to play.
       responses:
         "200":
@@ -139,7 +167,9 @@ paths:
   /friendList/{userId}:
     get:
       tags:
-        - users
+      - friend
+      security:
+          - basicAuth: []
       parameters:
         - in: path
           name: userId
@@ -164,7 +194,7 @@ paths:
   /user:
     post:
       tags:
-        - visitor
+        - auth
       description: Create a new user 
       parameters:
         - in: body
@@ -181,7 +211,9 @@ paths:
   /user/{userId}:
     get:
       tags:
-        - users
+      - user
+      security:
+          - basicAuth: []
       parameters:
         - in: path
           name: userId
@@ -201,7 +233,9 @@ paths:
       description: find a user by Id
     post:
       tags:
-        - users
+      - user
+      security:
+          - basicAuth: []
       parameters:
         - in: body
           name: user
@@ -227,7 +261,7 @@ paths:
   /topPlayers:
     get:
       tags:
-      - visitor
+      - topPlayers
       description: Returns the top 10 of all categories
       responses:
         "200":
@@ -245,7 +279,7 @@ paths:
   /stats/?questionId=:
     get:
       tags:
-        - visitor
+        - stats
       parameters:
         - in: query
           name: questionId
@@ -266,7 +300,7 @@ paths:
   /stats/?categoryId=:
     get:
       tags:
-        - visitor
+        - stats
       parameters:
         - in: query
           name: categoryId
@@ -288,7 +322,7 @@ paths:
   /stats/?difficulty=:
     get:
       tags:
-        - visitor
+        - stats
       parameters:
         - in: query 
           name: difficulty
@@ -312,7 +346,9 @@ paths:
   /question/{categoryId}/random:
     get:
       tags:
-        - users
+      - question
+      security:
+          - basicAuth: []
       parameters:
         - in: path
           name: categoryId
@@ -330,7 +366,9 @@ paths:
   /question/{categoryId}/all:
     get:
       tags:
-        - users
+      - question
+      security:
+          - basicAuth: []
       parameters:
         - in: path
           name: categoryId
@@ -350,7 +388,9 @@ paths:
   /question/{categoryId}/{difficultyId}/random:
     get:
       tags:
-        - users
+      - question
+      security:
+          - basicAuth: []
       parameters:
         - in: path
           name: categoryId
@@ -373,7 +413,9 @@ paths:
   /question/{categoryId}/{difficultyId}/all:
     get:
       tags:
-        - users
+      - question
+      security:
+          - basicAuth: []
       description: Return all question with the selected difficulty and category.
       parameters:
        - in: path
@@ -397,7 +439,9 @@ paths:
   /response/{questionId}:
     get:
       tags:
-        - users
+      - response
+      security:
+          - basicAuth: []
       description:
         Returns the response of a specified question
       parameters:
@@ -414,8 +458,8 @@ paths:
 
   /anecdote/{questionId}:
     get:
-      tags: 
-        - users
+      security:
+          - basicAuth: []
       description: Return an anecdote with additional information to the question asked
       parameters:
       - in: path
@@ -430,6 +474,8 @@ paths:
 
   /question/{categoryId}/{questionId}?diff=:
     get:
+      tags:
+      - question
       parameters:
         - in: query
           name: diff
@@ -446,8 +492,8 @@ paths:
           description: todo
           required: True
         
-      tags:
-        - users
+      security:
+          - basicAuth: []
       responses:
         "200":
           description: Success
@@ -456,7 +502,9 @@ paths:
   /quizz/random:
     get:
       tags:
-        - users
+      - quizz
+      security:
+          - basicAuth: []
       responses:
         "200":
           description: Success - Send a random quizz
@@ -472,7 +520,9 @@ paths:
   /quizz/all:
     get:
       tags:
-        - users
+      - quizz
+      security:
+          - basicAuth: []
       responses:
         "200":
           description: Success - Send all quizz of a specific category
@@ -489,14 +539,16 @@ paths:
 
   /quizz/{categoryId}/random:
     get:
+      tags:
+      - quizz
       parameters:
         - in: path
           name: categoryId
           required: True
           type: integer
           description: The Id of a category
-      tags:
-        - users
+      security:
+          - basicAuth: []
       responses:
         "200":
           description: Success - Send a quizz of a specific category
@@ -511,14 +563,16 @@ paths:
 
   /quizz/{categoryId}/all:
     get:
+      tags:
+      - quizz
       parameters:
         - in: path
           name: categoryId
           required: True
           type: integer
           description: The Id of a category
-      tags:
-        - users
+      security:
+          - basicAuth: []
       responses:
         "200":
           description: Success - Send all quizz of a specific category
@@ -536,7 +590,9 @@ paths:
   /quizz/random?diff=:
     get:
       tags:
-        - users
+      - quizz
+      security:
+          - basicAuth: []
       parameters:
         - in: query
           name: diff
@@ -559,7 +615,9 @@ paths:
   /quizz/all?diff=:
     get:
       tags:
-        - users
+      - quizz
+      security:
+          - basicAuth: []
       parameters:
         - in: query
           name: diff
@@ -584,7 +642,9 @@ paths:
   /quizz/{categoryId}/random?diff=:
     get:
       tags:
-        - users
+      - quizz
+      security:
+          - basicAuth: []
       parameters:
         - in: query
           name: diff
@@ -612,7 +672,9 @@ paths:
   /quizz/{categoryId}/all?diff=:
     get:
       tags:
-        - users
+      - quizz
+      security:
+          - basicAuth: []
       parameters:
         - in: query
           name: diff
@@ -642,7 +704,9 @@ paths:
   /notifications:
     get:
       tags:
-        - users
+      - friend
+      security:
+          - basicAuth: []
       
       parameters:
         - in: body
@@ -667,7 +731,9 @@ paths:
   /defy/{userId}/{questionId}:
     post:
       tags:
-        - users
+      - friend
+      security:
+          - basicAuth: []
       description: Send a defy request to a user.
       parameters:
         - in: path
@@ -914,5 +980,7 @@ definitions:
           $ref:  "#/definitions/gameRequest"
             
           
-    
+securityDefinitions:
+  basicAuth:
+    type: basic
 
