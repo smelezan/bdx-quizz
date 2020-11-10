@@ -4,8 +4,8 @@ info:
   title: bdx-quizz
   description: API description in Markdown.
   version: 1.0.0
-host: api.example.com
-basePath: /v1
+# host: api.example.com
+# basePath: /v1
 schemes:
   - https
 
@@ -49,7 +49,7 @@ paths:
             $ref:  "#/definitions/ErrorModel"
 
 
-  /users?q=:
+  /users:
     get:
       tags:
         - user
@@ -126,7 +126,7 @@ paths:
       operationId: removeFriend
       description: Remove a friend from the friends list.
   
-  /user/invite/?email=:
+  /user/invite:
     post:
       tags:
       - user
@@ -136,6 +136,11 @@ paths:
           required: True
           type: string
           description: The mail of the friend
+        - in: query
+          name: username
+          required: True
+          type: string
+          description: The username of the friend
       security:
           - basicAuth: []
       description: Send a mail to invite a person not registered to play one game.
@@ -145,24 +150,6 @@ paths:
         "400":
           description: Error - Email address not found.
           
-  /user/invite/?=username:
-    post:
-      tags:
-      - user
-      parameters:
-        - in: query
-          name: username
-          required: True
-          type: string
-          description: The username of the friend
-      security:
-          - basicAuth: []
-      description: Send notification to invite a friend to play.
-      responses:
-        "200":
-          description: Success - Invitation sent.
-        "400":
-          description: Error - username not found.
       
   /friendList/{userId}:
     get:
@@ -189,24 +176,6 @@ paths:
             $ref: "#/definitions/ErrorModel"
       operationId: listFriends
       description: list all the friends of an user.
-
-
-  /user:
-    post:
-      tags:
-        - auth
-      description: Create a new user 
-      parameters:
-        - in: body
-          name: user
-          schema:
-            $ref: "#/definitions/User"
-
-      responses:
-        "200":
-          description: The user has been created successfully.
-        "400":
-          description: This user already exists.
 
   /user/{userId}:
     get:
@@ -276,7 +245,7 @@ paths:
             $ref:  "#/definitions/ErrorModel"
           
           
-  /stats/?questionId=:
+  /stats:
     get:
       tags:
         - stats
@@ -286,7 +255,20 @@ paths:
           required: True
           type: integer
           description: The Id of a question
-      description: Return the ratio of good and bad answer of a specified question
+        - in: query
+          name: categoryId
+          required: True
+          type: integer
+          description: The Id of a category
+        - in: query 
+          name: difficulty
+          required: True
+          type: integer
+          maximum: 3
+          minimum: 1
+          description: The difficulty
+          
+      description: Return the ratio of good and bad answer of a specified question/ categorie / difficulty
       responses:
         "200":
           description: Succes
@@ -297,51 +279,6 @@ paths:
           schema:
             $ref:  "#/definitions/ErrorModel"
 
-  /stats/?categoryId=:
-    get:
-      tags:
-        - stats
-      parameters:
-        - in: query
-          name: categoryId
-          required: True
-          type: integer
-          description: The Id of a category
-      responses:
-        "200":
-          description: Success - Send the stats of a specific category
-          schema:
-            $ref: "#/definitions/CategoryStat"
-        "400":
-          description: Error - That category does not exist
-          schema:
-            $ref: "#/definitions/ErrorModel"
-      operationId: statsCat
-      description: Send the stats of a specific category
-
-  /stats/?difficulty=:
-    get:
-      tags:
-        - stats
-      parameters:
-        - in: query 
-          name: difficulty
-          required: True
-          type: integer
-          maximum: 3
-          minimum: 1
-          description: The difficulty
-      responses:
-        "200":
-          description: Success - Send the stats of a specific difficulty
-          schema:
-            $ref: "#/definitions/DifficultyStat"
-        "400":
-          description: Error - That difficulty does not exist
-          schema:
-            $ref: "#/definitions/ErrorModel"
-      operationId: statsDiff
-      description: Send the stats of a specific difficulty
   
   /question/{categoryId}/random:
     get:
@@ -456,23 +393,8 @@ paths:
           schema: 
             $ref: "#/definitions/Answer"
 
-  /anecdote/{questionId}:
-    get:
-      security:
-          - basicAuth: []
-      description: Return an anecdote with additional information to the question asked
-      parameters:
-      - in: path
-        name: questionId
-        required: True
-        type: integer
-        description: The Id of a question
-      responses:
-        "200":
-          description: Success
-      
 
-  /question/{categoryId}/{questionId}?diff=:
+  /question/{categoryId}/{questionId}:
     get:
       tags:
       - question
@@ -503,6 +425,13 @@ paths:
     get:
       tags:
       - quizz
+      parameters:
+        - in: query
+          name: diff
+          type: number
+          maximum: 3
+          minimum: 1
+          description: The difficulty of the quizz
       security:
           - basicAuth: []
       responses:
@@ -517,102 +446,10 @@ paths:
       operationId: randomQuizz
       description: Send a random quizz
 
+
+
+  
   /quizz/all:
-    get:
-      tags:
-      - quizz
-      security:
-          - basicAuth: []
-      responses:
-        "200":
-          description: Success - Send all quizz of a specific category
-          schema:
-            type: array
-            items: 
-              $ref: "#/definitions/Quizz"
-        "400":
-          description: Error - That category does not exist
-          schema: 
-            $ref: "#/definitions/ErrorModel"
-      operationId: allQuizz
-      description: Send all quizz
-
-  /quizz/{categoryId}/random:
-    get:
-      tags:
-      - quizz
-      parameters:
-        - in: path
-          name: categoryId
-          required: True
-          type: integer
-          description: The Id of a category
-      security:
-          - basicAuth: []
-      responses:
-        "200":
-          description: Success - Send a quizz of a specific category
-          schema:
-            $ref: "#/definitions/Quizz"
-        "400":
-          description: Error - That category does not exist
-          schema: 
-            $ref: "#/definitions/ErrorModel"
-      operationId: randomQuizzCat
-      description: Send a random quizz of a specific category
-
-  /quizz/{categoryId}/all:
-    get:
-      tags:
-      - quizz
-      parameters:
-        - in: path
-          name: categoryId
-          required: True
-          type: integer
-          description: The Id of a category
-      security:
-          - basicAuth: []
-      responses:
-        "200":
-          description: Success - Send all quizz of a specific category
-          schema:
-            type: array
-            items: 
-              $ref: "#/definitions/Quizz"
-        "400":
-          description: Error - That category does not exist
-          schema: 
-            $ref: "#/definitions/ErrorModel"
-      operationId: allQuizzCat
-      description: Send all quizz of a specific category
-
-  /quizz/random?diff=:
-    get:
-      tags:
-      - quizz
-      security:
-          - basicAuth: []
-      parameters:
-        - in: query
-          name: diff
-          type: integer
-          maximum: 3
-          minimum: 1
-          description: The difficulty of the quizz
-      responses:
-        "200":
-          description: Success - Send a random quizz of a specific difficulty
-          schema:
-            $ref:  "#/definitions/Quizz"
-        "400":
-          description: Error - Bad difficulty argument
-          schema:
-            $ref: "#/definitions/ErrorModel"
-      operationId: randomQuizzDiff
-      description: Send a random quizz of a specific difficulty
-
-  /quizz/all?diff=:
     get:
       tags:
       - quizz
@@ -639,7 +476,7 @@ paths:
       operationId: allQuizzDiff
       description: Send all quizz of a specific difficulty
 
-  /quizz/{categoryId}/random?diff=:
+  /quizz/{categoryId}/random:
     get:
       tags:
       - quizz
@@ -669,7 +506,7 @@ paths:
       operationId: randomQuizzCatDiff
       description: Send a random quizz of a specific difficulty
 
-  /quizz/{categoryId}/all?diff=:
+  /quizz/{categoryId}/all:
     get:
       tags:
       - quizz
@@ -755,6 +592,52 @@ paths:
           description: Error - User or category not found.
           schema:
             $ref : "#/definitions/ErrorModel"
+            
+  /signup:
+    post:
+      tags:
+      - auth
+      description: create an user
+      parameters:
+        - in: body
+          name: authentification
+          schema:
+            $ref: '#/definitions/AuthentificationModel'
+      responses:
+        "200":
+          description: Success - create a user
+          schema:
+            type: string
+            example: user created
+        "400":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    
+        
+        
+        
+  /login:
+    post:
+      tags:
+        - auth 
+      description: log an user 
+      parameters:
+        - in: body
+          name: authentification
+          schema:
+            $ref: '#/definitions/AuthentificationModel'
+      responses:
+        "200":
+          description: Success - log a user
+          schema:
+            $ref: '#/definitions/TokenModel'
+        "400":
+          description: Error - User not found.
+          schema:
+            type: string
+            example: Wrond username or password
+    
 definitions:
   Category:
     type: object
@@ -772,6 +655,34 @@ definitions:
       timePlayed:
         type: integer
         example: 1000
+        
+  
+  TokenModel:
+    type: object
+    required:
+    - userId
+    - token
+    properties:
+      userId:
+        type: string
+        example: d290f1ee-6c54-4b01-90e6-d701748f0480
+      token:
+        type: string
+        
+        
+  AuthentificationModel:
+    type: object
+    required:
+    - username
+    - password
+    properties:
+      username:
+        type: string
+        example: Yondamdam
+      password:
+        type: string
+        example: mdp-secret
+        
   
   ErrorModel:
     type: object
@@ -983,4 +894,3 @@ definitions:
 securityDefinitions:
   basicAuth:
     type: basic
-

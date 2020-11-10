@@ -1,0 +1,642 @@
+[
+    {
+      "id": 65,
+      "question": "When using the POST method, variables are displayed in the URL:",
+      "description": null,
+      "answers": {
+        "answer_a": "True",
+        "answer_b": "False",
+        "answer_c": null,
+        "answer_d": null,
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "true",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_b",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "PHP"
+        }
+      ],
+      "category": "",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 935,
+      "question": "Which command would show you the logs of a running pod in Kubernetes?",
+      "description": null,
+      "answers": {
+        "answer_a": "kubectl print pod-name",
+        "answer_b": "kubectl log pod-name",
+        "answer_c": "kubectl show -l pod-name",
+        "answer_d": "kubectl logs pod-name",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "true",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": null,
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Kubernetes"
+        }
+      ],
+      "category": "Docker",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 1065,
+      "question": "What is the name of the Template Engine utilized by Laravel?",
+      "description": null,
+      "answers": {
+        "answer_a": "Blade",
+        "answer_b": "Twig",
+        "answer_c": "Pug",
+        "answer_d": "Squirrelly",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Laravel"
+        }
+      ],
+      "category": "Code",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 426,
+      "question": "Storing same data in many places is called.",
+      "description": null,
+      "answers": {
+        "answer_a": "Iteration",
+        "answer_b": "Enumeration",
+        "answer_c": "Redundancy",
+        "answer_d": "Concurrency",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "MySQL"
+        }
+      ],
+      "category": "SQL",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 749,
+      "question": "What is the Container Runtime?",
+      "description": null,
+      "answers": {
+        "answer_a": "Software that is responsible for running containers",
+        "answer_b": "An API object that manages a replicated application",
+        "answer_c": "Stored instance of a Container that holds a set of software needed to run an application",
+        "answer_d": "A command line tool for communicating with a Kubernetes API server",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Kubernetes"
+        }
+      ],
+      "category": "Linux",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 1035,
+      "question": "Which of the following commands will install Ansible on Ubuntu?",
+      "description": null,
+      "answers": {
+        "answer_a": "sudo apt install ansible",
+        "answer_b": "sudo apt install ansible-controller",
+        "answer_c": "sudo apt install ansible-master",
+        "answer_d": "sudo apt install ansible-server",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "DevOps"
+        }
+      ],
+      "category": "DevOps",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 609,
+      "question": "If we want to return a value from a function we called, how can we do that?",
+      "description": null,
+      "answers": {
+        "answer_a": "We need to use 'return $value;'",
+        "answer_b": "We need to use 'return = $value;'",
+        "answer_c": "We need to use 'return: $value;'",
+        "answer_d": null,
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "PHP"
+        }
+      ],
+      "category": "Code",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 37,
+      "question": "The command uname -a will:",
+      "description": null,
+      "answers": {
+        "answer_a": "display only the system hostname",
+        "answer_b": "display the IP address of the first Ethernet adapter",
+        "answer_c": "display all available information about your system",
+        "answer_d": "display all users on the system.",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_c",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Linux"
+        }
+      ],
+      "category": "Linux",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 1055,
+      "question": "Which command would you use to get the hostname of a remote host with Ansible",
+      "description": null,
+      "answers": {
+        "answer_a": "ansible your_server -m setup -a field=*hostname*",
+        "answer_b": "ansible your_server -m env -a filter=*hostname*",
+        "answer_c": "ansible your_server -m setup -a filter=*hostname*",
+        "answer_d": null,
+        "answer_e": "ansible your_server -m setup -a get=*hostname*",
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "DevOps"
+        }
+      ],
+      "category": "DevOps",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 634,
+      "question": "How is the comparison of objects done in PHP?",
+      "description": null,
+      "answers": {
+        "answer_a": "We use the operator '===' to test two objects are instanced from the same class and have same attributes and equal values.",
+        "answer_b": "We use the operator '=' to test two objects are instanced from the same class and have same attributes and equal values.",
+        "answer_c": "We use the operator '==' to test two objects are instanced from the same class and have same attributes and equal values.",
+        "answer_d": null,
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "PHP"
+        }
+      ],
+      "category": "Code",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 865,
+      "question": "How to install a docker plugin vieux/sshfs with debug environment set to 1.",
+      "description": null,
+      "answers": {
+        "answer_a": "$ docker plugin install vieux/sshfs DEBUG=1",
+        "answer_b": "$ docker install vieux/sshfs DEBUG=1",
+        "answer_c": "$ docker install plugins vieux/sshfs DEBUG=1",
+        "answer_d": null,
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Docker"
+        }
+      ],
+      "category": "Docker",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 921,
+      "question": "Which of the following is true for Kube-proxy?",
+      "description": null,
+      "answers": {
+        "answer_a": "Kube-proxy is a network proxy that runs only on the master node",
+        "answer_b": "Kube-proxy can run on each and every node and can do simple TCP/UDP packet forwarding across backend network service.",
+        "answer_c": null,
+        "answer_d": null,
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "true",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": null,
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Kubernetes"
+        }
+      ],
+      "category": "Docker",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 1026,
+      "question": "What is Docker Swarm mode?",
+      "description": null,
+      "answers": {
+        "answer_a": "A swarm is the name of the latest Docker release",
+        "answer_b": "A swarm is a group of machines that are running Docker and joined into a cluster",
+        "answer_c": "Docker swarm is also known as Docker Hub",
+        "answer_d": "Docker swarm is a tool for managing your CI/CD pipelines",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "true",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Docker"
+        }
+      ],
+      "category": "Docker",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 130,
+      "question": "What is the correct HTML for creating a hyperlink?",
+      "description": null,
+      "answers": {
+        "answer_a": "<a url=\"http://www.w3schools.com\">W3Schools.com</a>",
+        "answer_b": "<a name=\"http://www.w3schools.com\">W3Schools.com</a>",
+        "answer_c": "<a>http://www.w3schools.com</a>",
+        "answer_d": "<a href=\"http://www.w3schools.com\">W3Schools</a>",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "true",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_d",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "HTML"
+        }
+      ],
+      "category": "",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 457,
+      "question": "Which html attribute is used to provide an advisory text about an element or Its contents.",
+      "description": null,
+      "answers": {
+        "answer_a": "Dir",
+        "answer_b": "Title",
+        "answer_c": "Tooltip",
+        "answer_d": "None of the above",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "HTML"
+        }
+      ],
+      "category": "Code",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 339,
+      "question": "Which of the following are not Numeric column types?",
+      "description": null,
+      "answers": {
+        "answer_a": "BIGINT",
+        "answer_b": "LARGEINT",
+        "answer_c": "SMALLINT",
+        "answer_d": "DOUBLE",
+        "answer_e": "DECIMAL",
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "true",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "MySQL"
+        }
+      ],
+      "category": "SQL",
+      "difficulty": "Hard"
+    },
+    {
+      "id": 593,
+      "question": "How can we get the error when there is a problem with uploading a file?",
+      "description": null,
+      "answers": {
+        "answer_a": "$FILES['userfile']['error']",
+        "answer_b": "$_FILES['userfile = error']",
+        "answer_c": "$_FILES['userfile']['error']",
+        "answer_d": null,
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "PHP"
+        }
+      ],
+      "category": "Code",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 5,
+      "question": "What does the command top show",
+      "description": null,
+      "answers": {
+        "answer_a": "The space usage",
+        "answer_b": "The memory usage",
+        "answer_c": "The current processes alongside information about them",
+        "answer_d": "Nothing, it's not a command",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "false",
+        "answer_b_correct": "false",
+        "answer_c_correct": "true",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_c",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Linux"
+        }
+      ],
+      "category": "Linux",
+      "difficulty": "Easy"
+    },
+    {
+      "id": 962,
+      "question": "Which of the following are true for a pod in Kubernetes?",
+      "description": null,
+      "answers": {
+        "answer_a": "A Pod represents processes running on your Cluster",
+        "answer_b": "Pods are the simplest units in the Kubernetes object model that you create or deploy",
+        "answer_c": "A pod is the same as a container",
+        "answer_d": "You can have only 1 container running in 1 pod",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "true",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "true",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": null,
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "Kubernetes"
+        }
+      ],
+      "category": "DevOps",
+      "difficulty": "Medium"
+    },
+    {
+      "id": 113,
+      "question": "What is the strpos() function used for?",
+      "description": null,
+      "answers": {
+        "answer_a": "Search for character within a string",
+        "answer_b": "Find the last character of a string",
+        "answer_c": "Both b and c",
+        "answer_d": "Locate position of a string’s first character",
+        "answer_e": null,
+        "answer_f": null
+      },
+      "multiple_correct_answers": "false",
+      "correct_answers": {
+        "answer_a_correct": "true",
+        "answer_b_correct": "false",
+        "answer_c_correct": "false",
+        "answer_d_correct": "false",
+        "answer_e_correct": "false",
+        "answer_f_correct": "false"
+      },
+      "correct_answer": "answer_a",
+      "explanation": null,
+      "tip": null,
+      "tags": [
+        {
+          "name": "PHP"
+        }
+      ],
+      "category": "",
+      "difficulty": "Medium"
+    }
+  ]
